@@ -19,3 +19,55 @@
 - `register()` takes two params. First is name and second one is options which is optional. [show more](./src/assets/Screenshot_1.png)
 - ` {...register("email", { required: "Email is required" })}` this required field will return as a message.
 - find the error at `const {formState : {errors}} = useForm()`
+
+# _Private_ Route using [React router](https://reactrouter.com)
+
+## Basic
+
+- create a component that returns it's children on condition.
+
+```js
+const PrivateRoute = ({ children }) => {
+  if (user?.uid) return children;
+  return <>Loading...</>;
+};
+
+export default PrivateRoute;
+```
+
+- now wrap any component with `PrivateRoute`
+
+```js
+{
+  path: "/",
+  element: (
+    <PrivateRoute>
+      <Home />
+    </PrivateRoute>
+  ),
+},
+```
+
+## Intermediate
+
+- Go to different page if condition doesn't full fill
+
+```js
+const PrivateRoute = ({ children }) => {
+  if (user?.uid) return children;
+  return <Navigate to={"/signin"}></Navigate>;
+};
+```
+
+- use `Navigate` component instead of `useNavigate()` hook there.
+
+```js
+const PrivateRoute = ({ children }) => {
+  const navigate = useNavigate();
+  const { user } = useContext(User);
+  if (user?.uid) return children;
+  else navigate("/signin");
+};
+```
+
+> `useNavigate` works on events only

@@ -9,11 +9,14 @@ import {
   signOut,
 } from "firebase/auth";
 import { createContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { app } from "../firebase/app";
 export const auth = getAuth(app);
 
 export const User = createContext({});
+
 const UserContext = ({ children }) => {
+  const navigate = useNavigate();
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -33,6 +36,7 @@ const UserContext = ({ children }) => {
     createUserWithEmailAndPassword(auth, email, password)
       .then(({ user }) => {
         setUser(user);
+        navigate("/");
       })
       .catch((error) => {
         console.log(error);
@@ -52,6 +56,7 @@ const UserContext = ({ children }) => {
       .then((userCredential) => {
         // Signed in
         setUser(userCredential.user);
+        navigate("/");
         // ...
       })
       .catch((error) => {
@@ -63,6 +68,7 @@ const UserContext = ({ children }) => {
     signInWithPopup(auth, provider)
       .then((result) => {
         setUser(result.user);
+        navigate("/");
 
         // ...
       })
@@ -78,6 +84,7 @@ const UserContext = ({ children }) => {
     signInWithPopup(auth, provider)
       .then((result) => {
         setUser(result.user);
+        navigate("/");
       })
       .catch((error) => {
         console.log("🚀 > signInWithGoogle > error", error);

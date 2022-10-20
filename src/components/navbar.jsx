@@ -6,7 +6,7 @@ const Navbar = () => {
   const { user, _signOut } = useContext(User);
   return (
     <>
-      <div className='navbar bg-base-100 sticky top-0'>
+      <div className='navbar bg-base-100 sticky top-0 z-50'>
         <div className='flex-1'>
           <Link to={"/"}>
             <span className='btn btn-ghost normal-case text-xl'>daisyUI</span>
