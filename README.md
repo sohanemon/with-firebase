@@ -104,5 +104,6 @@ const {
 
 ```js
 //login.jsx
-setTimeout(() => navigate(pathname), 100);
+setTimeout(() => navigate(pathname || '/'), 100);
+// go to root route if pathname not available
 ```
