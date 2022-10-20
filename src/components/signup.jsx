@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
 import { User } from "../contexts/user-context";
 
 const Signup = () => {
@@ -45,8 +46,15 @@ const Signup = () => {
                 />
               </div>
               <div className='form-control mt-6'>
-                <button className='btn btn-primary'>Login</button>
+                <button className='btn btn-primary'>Register</button>
               </div>
+              <label className='label'>
+                {" "}
+                Already have account?{" "}
+                <Link to='/signin' className='hover:underline'>
+                  Sign in
+                </Link>
+              </label>
             </form>
           </div>
         </div>

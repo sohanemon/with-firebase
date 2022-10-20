@@ -1,4 +1,16 @@
+import { useContext } from "react";
+import { Link } from "react-router-dom";
+import { User } from "../contexts/user-context";
+import { useForm } from "react-hook-form";
+import SocialLogin from "./social-login";
+
 const Signin = () => {
+  const { signInWithEmail } = useContext(User);
+  const { handleSubmit, register } = useForm();
+  const onSubmit = (data) => {
+    signInWithEmail(data.email, data.password);
+  };
+
   return (
     <>
       <div className='hero min-h-screen bg-base-200'>
@@ -11,12 +23,14 @@ const Signin = () => {
             </p>
           </div>
           <div className='card flex-shrink-0 w-96 shadow-2xl bg-base-100'>
-            <div className='card-body'>
+            <form onSubmit={handleSubmit(onSubmit)} className='card-body'>
+              <SocialLogin />
               <div className='form-control'>
                 <label className='label'>
                   <span className='label-text'>Email</span>
                 </label>
                 <input
+                  {...register("email")}
                   type='email'
                   placeholder='email'
                   className='input input-bordered'
@@ -27,6 +41,8 @@ const Signin = () => {
                   <span className='label-text'>Password</span>
                 </label>
                 <input
+                  {...register("password")}
+                  name='password'
                   type='password'
                   placeholder='password'
                   className='input input-bordered'
@@ -40,7 +56,14 @@ const Signin = () => {
               <div className='form-control mt-6'>
                 <button className='btn btn-primary'>Login</button>
               </div>
-            </div>
+              <label className='label'>
+                {" "}
+                Don't have account?{" "}
+                <Link to='/signup' className='hover:underline'>
+                  Sign up
+                </Link>
+              </label>
+            </form>
           </div>
         </div>
       </div>
