@@ -17,7 +17,6 @@ export const User = createContext({});
 
 const UserContext = ({ children }) => {
   const [isPending, setIsPending] = useState(true);
-  console.log("🚀 > UserContext > isPending", isPending);
   const navigate = useNavigate();
   useEffect(() => {
     let unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -39,7 +38,7 @@ const UserContext = ({ children }) => {
     createUserWithEmailAndPassword(auth, email, password)
       .then(({ user }) => {
         setUser(user);
-        navigate("/");
+        goToRoot();
       })
       .catch((error) => {
         console.log(error);
@@ -59,7 +58,7 @@ const UserContext = ({ children }) => {
       .then((userCredential) => {
         // Signed in
         setUser(userCredential.user);
-        navigate("/");
+        goToRoot();
         // ...
       })
       .catch((error) => {
@@ -71,13 +70,11 @@ const UserContext = ({ children }) => {
     signInWithPopup(auth, provider)
       .then((result) => {
         setUser(result.user);
-        navigate("/");
+        goToRoot();
 
         // ...
       })
       .catch((error) => {
-        console.log("🚀 > signInWithFacebook > error", error);
-
         // ...
       });
   };
@@ -87,11 +84,14 @@ const UserContext = ({ children }) => {
     signInWithPopup(auth, provider)
       .then((result) => {
         setUser(result.user);
-        navigate("/");
+        goToRoot();
       })
-      .catch((error) => {
-        console.log("🚀 > signInWithGoogle > error", error);
-      });
+      .catch((error) => {});
+  };
+  const goToRoot = () => {
+    setTimeout(() => {
+      navigate("/");
+    }, 100);
   };
 
   return (
