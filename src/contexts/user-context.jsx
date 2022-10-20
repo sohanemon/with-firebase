@@ -8,7 +8,7 @@ import {
   signInWithPopup,
   signOut,
 } from "firebase/auth";
-import { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState, useTransition } from "react";
 import { useNavigate } from "react-router-dom";
 import { app } from "../firebase/app";
 export const auth = getAuth(app);
@@ -16,11 +16,14 @@ export const auth = getAuth(app);
 export const User = createContext({});
 
 const UserContext = ({ children }) => {
+  const [isPending, setIsPending] = useState(true);
+  console.log("🚀 > UserContext > isPending", isPending);
   const navigate = useNavigate();
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    let unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setUser(user);
+        setIsPending(false);
       } else {
         console.log("error in onAuthStateChanged");
       }
@@ -94,6 +97,7 @@ const UserContext = ({ children }) => {
   return (
     <User.Provider
       value={{
+        isPending,
         user,
         signInWithGoogle,
         createUserWithEmail,
