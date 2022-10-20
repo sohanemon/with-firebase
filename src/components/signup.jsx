@@ -1,4 +1,13 @@
+import { useContext } from "react";
+import { useForm } from "react-hook-form";
+import { User } from "../contexts/user-context";
+
 const Signup = () => {
+  const { register, handleSubmit } = useForm();
+  const { createUserWithEmail } = useContext(User);
+  const createUser = (data) => {
+    createUserWithEmail(data.email, data.password);
+  };
   return (
     <>
       {" "}
@@ -12,12 +21,13 @@ const Signup = () => {
             </p>
           </div>
           <div className='card flex-shrink-0 w-96 shadow-2xl bg-base-100'>
-            <form className='card-body'>
+            <form onSubmit={handleSubmit(createUser)} className='card-body'>
               <div className='form-control'>
                 <label className='label'>
                   <span className='label-text'>Email</span>
                 </label>
                 <input
+                  {...register("email", { required: "Email is required" })}
                   type='email'
                   placeholder='email'
                   className='input input-bordered'
@@ -28,6 +38,7 @@ const Signup = () => {
                   <span className='label-text'>Password</span>
                 </label>
                 <input
+                  {...register("password")}
                   type='password'
                   placeholder='password'
                   className='input input-bordered'
@@ -45,3 +56,5 @@ const Signup = () => {
 };
 
 export default Signup;
+
+/* ----------------------------- utilities ----------------------------- */

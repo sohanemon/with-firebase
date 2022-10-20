@@ -6,17 +6,17 @@ const Navbar = () => {
       <div className='navbar bg-base-100 sticky top-0'>
         <div className='flex-1'>
           <Link to={"/"}>
-            <a className='btn btn-ghost normal-case text-xl'>daisyUI</a>
+            <span className='btn btn-ghost normal-case text-xl'>daisyUI</span>
           </Link>
         </div>
         <div className='flex-none'>
           <ul className='menu menu-horizontal p-0'>
             <li>
               <Link to='signin'>
-                <a>Sing In</a>
+                <span>Sing In</span>
               </Link>
               <Link to='signup'>
-                <a>Sing up</a>
+                <span>Sing up</span>
               </Link>
             </li>
           </ul>
