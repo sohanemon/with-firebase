@@ -71,3 +71,38 @@ const PrivateRoute = ({ children }) => {
 ```
 
 > `useNavigate` works on events only
+
+## Redirect to previous path after private route
+
+- navigate with state & replace
+
+```js
+//private route.jsx
+const PrivateRoute = ({ children }) => {
+  const { pathname } = useLocation();
+  if (user?.uid) return children;
+
+  return <Navigate state={{ pathname }} to={"/login"} replace></Navigate>;
+  // navigated from pathname
+  // passing a props named state
+};
+```
+
+> state props will be injected to the location of `/login`
+
+- get the pathname
+
+```js
+// login.jsx
+const {
+  state: { pathname },
+} = useLocation();
+// location.state.pathname // state={{ pathname }}
+```
+
+- now we know the previous location and go with
+
+```js
+//login.jsx
+setTimeout(() => navigate(pathname), 100);
+```
